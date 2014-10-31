@@ -38,8 +38,8 @@
         if (start == 0) {
           start = timestamp;
         }
-        currentPosition = getCurrentPosition(currentPosition, timestamp); 
-        imgContainer.style.marginTop = currentPosition + "px";
+        currentPosition = getCurrentPosition(currentPosition, timestamp);
+        imgContainer.style.transform = "translateY(" + currentPosition + "px)";
 
         window.requestAnimationFrame(rafCallback);
       }
