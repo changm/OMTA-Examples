@@ -15,6 +15,9 @@
       var interval = 1000;  // in milliseconds
       var pixelHeight = 300;  // How far up / down to move the image
       var reset = false;
+      var frameCount = 3600; // 1 minute worth
+      var allPositions = [frameCount];
+      var currentFrame = 0;
 
       function getCurrentPosition(aPosition, timestamp) {
         var floor = Math.floor((timestamp - start) / interval);
@@ -34,19 +37,69 @@
         return position;
       }
 
+      function getAverage() {
+        var sum = 0;
+        for (var i = 1; i < frameCount; i++) {
+          var diff = allPositions[i] - allPositions[i-1];
+          sum += Math.abs(diff);
+        }
+
+        var average = sum / (frameCount - 1);
+        return average;
+      }
+
+      function getStdDev(average) {
+        var totalDiffs = 0;
+        for (var i = 1; i < frameCount; i++) {
+          var diff = Math.abs(allPositions[i] - allPositions[i-1]);
+          var fromMean = (diff - average) * (diff - average);
+          totalDiffs += fromMean;
+        }
+
+        var root = totalDiffs / (frameCount - 1);
+        return Math.sqrt(root);
+      }
+
+      function displayResults() {
+        var average = getAverage();
+        var stdDev = getStdDev(average);
+        var button = document.createElement("BUTTON");
+        var text = document.createTextNode("Retry");
+        button.appendChild(text);
+        button.onclick = startAnimation;
+
+        imgContainer.innerHTML = "Average: " + average + "<p>std dev: " + stdDev;
+        imgContainer.appendChild(button);
+      }
+
+      var lastPosition = 0;
+
+      function init() {
+        start = 0;
+        currentFrame = 0;
+        reset = false;
+        currentPosition = 0;
+        imgContainer.innerHTML = "<img src='images/foksuke.svg' />";
+      }
+
       function rafCallback(timestamp) {
         if (start == 0) {
           start = timestamp;
         }
 
         currentPosition = getCurrentPosition(currentPosition, timestamp);
+        allPositions[currentFrame++] = currentPosition;
         imgContainer.style.transform = "translateY(" + currentPosition + "px)";
-
-        window.requestAnimationFrame(rafCallback);
+        if (currentFrame == frameCount) {
+          displayResults();
+        } else {
+          window.requestAnimationFrame(rafCallback);
+        }
       }
 
       function startAnimation() {
         imgContainer = document.getElementById("animationBody");
+        init();
         window.requestAnimationFrame(rafCallback);
       }
     </script>

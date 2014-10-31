@@ -1,0 +1,26 @@
+/**
+ * Beige theme for reveal.js.
+ *
+ * Copyright (C) 2011-2012 Hakim El Hattab, http://hakim.se
+ */
+
+img {
+  width: 230px;
+}
+
+body {
+  font-size: 16px;
+  font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+}
+
+button {
+  width: 100px;
+  height: 25px;
+  font-size: 20px;
+}
+
+#animationBody {
+  margin-left: auto;
+  margin-right: auto;
+  width: 250px;
+}

@@ -1,0 +1,20 @@
+{
+  "name": "Measured RequestAnimation Bounce the Fox",
+  "description": "Measured RequestAnimation Bounce the Fox",
+  "launch_path": "/animation.html",
+  "fullscreen": true,
+  "developer": {
+    "name": "Brian Birtles",
+    "url": "https://github.com/mozilla-b2g/gaia"
+  },
+  "locales": {
+    "en-US": {
+      "name": "Measured RequestAnimation Bounce the Fox",
+      "description": "Measured RequestAnimation Bounce the Fox"
+    }
+  },
+  "default_locale": "en-US",
+  "icons": {
+    "512": "/images/icon.png"
+  }
+}
