@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <title>RequestAnimationFrame Test Case</title>
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <link rel="stylesheet" href="fire.css" id="theme">
+    <script language="javascript" type="text/javascript">
+      var imgContainer;
+      var currentPosition = 0;
+      var start = 0;
+      var interval = 1000;  // in milliseconds
+      var pixelHeight = 300;  // How far up / down to move the image
+      var reset = false;
+
+      function getCurrentPosition(aPosition, timestamp) {
+        var floor = Math.floor((timestamp - start) / interval);
+        var position = 0;
+        if (floor % 2) {
+          // Move in reverse
+          var percent = (timestamp - start) / interval;
+          position = ((2 - percent) * pixelHeight);
+          reset = true;
+        } else {
+          if (reset) {
+            reset = false;
+            start = timestamp;
+          }
+          position = ((timestamp - start) / interval) * pixelHeight;
+        }
+        return position;
+      }
+
+      function rafCallback(timestamp) {
+        if (start == 0) {
+          start = timestamp;
+        }
+        currentPosition = getCurrentPosition(currentPosition, timestamp); 
+        imgContainer.style.marginTop = currentPosition + "px";
+
+        window.requestAnimationFrame(rafCallback);
+      }
+
+      function startAnimation() {
+        imgContainer = document.getElementById("animationBody");
+        window.requestAnimationFrame(rafCallback);
+      }
+    </script>
+  </head>
+
+  <body onload="startAnimation()">
+    <div id="animationBody">
+        <img src="images/foksuke.svg" />
+    </div>
+  </body>
+</html>

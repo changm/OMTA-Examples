@@ -1,0 +1,15 @@
+/**
+ * Beige theme for reveal.js.
+ *
+ * Copyright (C) 2011-2012 Hakim El Hattab, http://hakim.se
+ */
+
+img {
+  width: 230px;
+}
+
+#animationBody {
+  margin-left: auto;
+  margin-right: auto;
+  width: 250px;
+}
